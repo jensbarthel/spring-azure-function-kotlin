@@ -1,0 +1,9 @@
+**/.vscode/*
+**/.idea
+**/node_modules
+**/local.config.sh
+**/build
+**/.gradle
+**/out
+
+**/local.settings.json
