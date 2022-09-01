@@ -1,7 +1,10 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask
 
 buildscript {
     repositories { mavenCentral() }
@@ -61,11 +64,11 @@ allprojects {
         }
     }
 
-    tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask> { dependsOn("ktlintFormat") }
+    tasks.withType<KtLintCheckTask> { dependsOn("ktlintFormat") }
 
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> { dependsOn("runKtlintFormatOverMainSourceSet") }
+    tasks.withType<Detekt> { dependsOn("runKtlintFormatOverMainSourceSet") }
 
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "11"
     }
 
