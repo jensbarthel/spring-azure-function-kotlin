@@ -12,6 +12,7 @@ import com.microsoft.azure.functions.annotation.HttpTrigger
 import org.springframework.cloud.function.adapter.azure.FunctionInvoker
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.messaging.Message
 
 class AggregateHandler : FunctionInvoker<String, String>() {
     @FunctionName("getAggregate")
@@ -35,16 +36,18 @@ class AggregateHandler : FunctionInvoker<String, String>() {
 @Configuration
 class AggregateHandlerConfiguration {
     @Bean
-//     fun getAggregate(context: ExecutionContext) = { tenantId: String -> // Fails: No qualifying Bean available
-    fun getAggregate() = { tenantId: String ->
-        TenantResponse(
-            id = tenantId,
+    fun getAggregate() = { message: Message<String> ->
+        val context = message.headers["executionContext"] as ExecutionContext
+        val aggregateId = message.payload
+        context.logger.info("Received request for aggregate with id $aggregateId")
+        AggregateResponse(
+            id = aggregateId,
             type = "FUNKY_TYPE"
         )
     }
 }
 
-data class TenantResponse(
+data class AggregateResponse(
     val id: String,
     val type: String,
 )
