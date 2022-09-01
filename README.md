@@ -6,7 +6,7 @@ A minimal azure function app written in Kotlin and Spring Cloud Function.
 - JDK 11 or higher
 - [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local)
 
-## Usage
+## Local Usage
 Copy   
 `aggregateservice/local.settings-template.json` to `local.settings.json` and modify accordingly.
 
