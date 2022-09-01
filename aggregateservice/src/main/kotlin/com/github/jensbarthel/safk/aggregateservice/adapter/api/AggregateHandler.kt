@@ -1,4 +1,4 @@
-package com.github.jensbarthel.playground.helloazure.adapter.api
+package com.github.jensbarthel.safk.aggregateservice.adapter.api
 
 import com.microsoft.azure.functions.ExecutionContext
 import com.microsoft.azure.functions.HttpMethod.GET
@@ -16,7 +16,7 @@ import org.springframework.messaging.Message
 
 class AggregateHandler : FunctionInvoker<String, String>() {
     @FunctionName("getAggregate")
-    fun handleGetTenant(
+    fun handleGetAggregate(
         @HttpTrigger(
             name = "httpRequestTrigger",
             route = "someAggregate/{id}",

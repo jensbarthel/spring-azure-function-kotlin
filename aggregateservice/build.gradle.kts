@@ -30,7 +30,7 @@ dependencies {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "com.github.jensbarthel.playground.helloazure.app.HelloApplication"
+        attributes["Main-Class"] = "com.github.jensbarthel.safk.aggregateservice.app.AggregateServiceApp"
     }
 }
 
@@ -52,7 +52,7 @@ azurefunctions {
         closureOf<MutableMap<String, String>> {
             put("SPRING_PROFILES_ACTIVE", stage.internalProfile)
             put("ApplicationInsightsAgent_EXTENSION_VERSION", "~4")
-            put("MAIN_CLASS", "com.github.jensbarthel.playground.helloazure.app.HelloApplication")
+            put("MAIN_CLASS", "com.github.jensbarthel.safk.aggregateservice.app.AggregateServiceApp")
         }
     )
 }
