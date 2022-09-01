@@ -59,11 +59,11 @@ azurefunctions {
 }
 
 enum class Stage(val resourceGroup: String, val internalProfile: String) {
-    DEV("YourCrazyResourceGroupDev", "dev"),
-    QA("YourCrazyResourceGroupQa", "qa"),
-    PROD("YourCrazyResourceGroupProd", "prod");
+    DEV("AggregateServiceDev", "dev"),
+    QA("AggregateServiceQa", "qa"),
+    PROD("AggregateServiceProd", "prod");
 
-    val appname get() = "account-$internalProfile"
+    val appname get() = "aggregateservice-$internalProfile"
 
     companion object {
         fun String.toStage() = values().first { it.name == this.toUpperCase() }
