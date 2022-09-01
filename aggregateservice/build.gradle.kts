@@ -1,4 +1,5 @@
 import Build_gradle.Stage.Companion.toStage
+import com.microsoft.azure.gradle.configuration.GradleRuntimeConfig
 
 buildscript {
     repositories {
@@ -43,7 +44,7 @@ azurefunctions {
     region = "westeurope"
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
     setRuntime(
-        closureOf<com.microsoft.azure.gradle.configuration.GradleRuntimeConfig> {
+        closureOf<GradleRuntimeConfig> {
             os("Linux")
             javaVersion("11")
         }
