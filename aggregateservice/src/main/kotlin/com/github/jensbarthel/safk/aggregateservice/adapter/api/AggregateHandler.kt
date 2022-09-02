@@ -1,5 +1,7 @@
 package com.github.jensbarthel.safk.aggregateservice.adapter.api
 
+import com.github.jensbarthel.safk.aggregateservice.domain.logging.LoggerProvider
+import com.github.jensbarthel.safk.aggregateservice.domain.logging.LoggerProvider.logger
 import com.microsoft.azure.functions.ExecutionContext
 import com.microsoft.azure.functions.HttpMethod.GET
 import com.microsoft.azure.functions.HttpRequestMessage
@@ -12,7 +14,6 @@ import com.microsoft.azure.functions.annotation.HttpTrigger
 import org.springframework.cloud.function.adapter.azure.FunctionInvoker
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.messaging.Message
 
 class AggregateHandler : FunctionInvoker<String, AggregateResponse>() {
     @FunctionName("getAggregate")
@@ -27,6 +28,7 @@ class AggregateHandler : FunctionInvoker<String, AggregateResponse>() {
         @BindingName("id") tenantId: String,
         context: ExecutionContext
     ): HttpResponseMessage {
+        LoggerProvider.initLogger(context.logger)
         return request.createResponseBuilder(HttpStatus.OK).body(
             handleRequest(tenantId, context)
         ).build()
@@ -36,10 +38,8 @@ class AggregateHandler : FunctionInvoker<String, AggregateResponse>() {
 @Configuration
 class AggregateHandlerConfiguration {
     @Bean
-    fun getAggregate() = { message: Message<String> ->
-        val context = message.headers["executionContext"] as ExecutionContext
-        val aggregateId = message.payload
-        context.logger.info("Received request for aggregate with id $aggregateId")
+    fun getAggregate() = { aggregateId: String ->
+        logger.info("Received request for aggregate with id $aggregateId")
         AggregateResponse(
             id = aggregateId,
             type = "FUNKY_TYPE"
